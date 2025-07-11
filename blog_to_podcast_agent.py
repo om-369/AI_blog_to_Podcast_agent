@@ -3,7 +3,7 @@ from uuid import uuid4
 from agno.agent import Agent
 from agno.models.openai import OpenAIChat
 from agno.tools.eleven_labs import ElevenLabsTools
-from agno.tools.firecrawl import FireCrawlTools
+from agno.tools.firecrawl import FirecrawlTools
 from agno.agent import Agent, RunResponse
 from agno.utils.audio import write_audio_to_file
 from agno.utils.log import logger
@@ -14,7 +14,7 @@ st.set_page_config(page_title="📰 ➡️ 🎙️ Blog to Podcast Agent", page_
 st.title("📰 ➡️ 🎙️ Blog to Podcast Agent")
 
 # Sidebar: API Keys
-st.sidebar("🔑 API Keys")
+st.sidebar.header("🔑 API Keys")
 
 
 openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
@@ -42,7 +42,7 @@ if generate_button:
     else:
         #set API keys as environment variables for Agno and Tools
         os.environ["OPENAI_API_KEY"] = openai_api_key
-        os.environ["ELEVENLABS_API_KEY"] = elevenlabs_api_key
+        os.environ["ELEVEN_LABS_API_KEY"] = elevenlabs_api_key
         os.environ["FIRECRAWL_API_KEY"] = firecrawl_api_key
         
         
@@ -51,14 +51,14 @@ if generate_button:
                 blog_to_podcast_agent = Agent(
                     name="Blog to Podcast Agent",
                     agent_id="blog_to_podcast_agent",
-                    model=OpenAIChat(model="gpt-4o"),
+                    model=OpenAIChat(id="gpt-4o"),
                     tools=[
                         ElevenLabsTools(
                             voice_id="JBFqnCBsd6RMkjVDRZzb",
                             model_id="eleven_multilingual_v2",
                             target_directory="audio_generations",
                         ),
-                        FireCrawlTools(),
+                        FirecrawlTools(),
                     ],
                     description="You are an AI agent that can generate audio using the ElevenLabs API.",
                     instructions=[

@@ -2,5 +2,5 @@ agno
 streamlit
 openai
 Requests
-firecrawl
+firecrawl-py
 elevenlabs
